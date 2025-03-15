@@ -14,7 +14,10 @@ namespace Module_6_3
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            TaskDialog.Show("Сообщение", "Тест");
+            Document doc = commandData.Application.ActiveUIDocument.Document;
+
+            List<Wall> walls = WallUtils.CreateWalls(commandData);
+
             return Result.Succeeded;
         }
     }
