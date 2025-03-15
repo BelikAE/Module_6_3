@@ -10,22 +10,9 @@ namespace Module_6_3
 {
     public class WallUtils
     {
-        public static List<Wall> CreateWalls(ExternalCommandData commandData)
+        public static List<Wall> CreateWalls(ExternalCommandData commandData, Level level1, Level level2)
         {
             Document doc = commandData.Application.ActiveUIDocument.Document;
-
-            List<Level> listLevel = new FilteredElementCollector(doc)
-           .OfClass(typeof(Level))
-           .OfType<Level>()
-           .ToList();
-
-            Level level1 = listLevel
-            .Where(x => x.Name.Equals("Уровень 1"))
-            .FirstOrDefault();
-
-            Level level2 = listLevel
-            .Where(x => x.Name.Equals("Уровень 2"))
-            .FirstOrDefault();
 
             double width = UnitUtils.ConvertToInternalUnits(10000, UnitTypeId.Millimeters);
             double depth = UnitUtils.ConvertToInternalUnits(5000, UnitTypeId.Millimeters);
@@ -40,7 +27,7 @@ namespace Module_6_3
             points.Add(new XYZ(-dx, -dy, 0));
 
             List<Wall> walls = new List<Wall>();
-            Transaction transaction = new Transaction(doc);
+            Transaction transaction = new Transaction(doc, "Построение стен");
             transaction.Start();
             for (int i = 0; i < 4; i++)
             {
